@@ -1,6 +1,6 @@
 project(bubble_sort)
 
-target_include_directories(bubble_sort_lib PUBLIC
+target_include_directories(${LIB} PUBLIC
     "${PROJECT_SOURCE_DIR}/src"
 )
 
