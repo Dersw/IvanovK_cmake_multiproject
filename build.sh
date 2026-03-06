@@ -17,12 +17,14 @@ mkdir -p bubble_sort
 arr_files[0]="run_bubble_sort.sh"
 arr_files[1]="run_bubble_sort_test.sh"
 arr_files[2]="run_multilevel_menu.sh"
+arr_files[3]="run_long_numbers_test.sh"
 
 arr_folders[0]="bubble_sort"
 arr_folders[1]="bubble_sort_test"
 arr_folders[2]="multilevel_menu"
+arr_folders[3]="long_numbers"
 
-for i in {0..2}; do
+for i in {0..3}; do
     cp "../$SOURCE_FOLDER/${arr_folders[i]}/${arr_files[i]}" "./${arr_folders[i]}"
 done
 

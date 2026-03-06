@@ -1,7 +1,7 @@
-project(bubble_sort_test)
+project(long_numbers)
 
 set (LIB
-    bubble_sort_lib8888
+    long_numbers_lib
 )
 
 add_library(${LIB} "")
