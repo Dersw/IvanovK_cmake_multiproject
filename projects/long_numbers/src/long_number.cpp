@@ -42,6 +42,21 @@ LongNumber::LongNumber(const char* const str) {
 	this->remove_leading_zeros();
 }
 
+LongNumber::LongNumber(const int x) {
+
+	if (x > 0) {
+		this->sign = 0;
+		this->numbers = new int[length];
+		this->numbers[0] = x * (-1);
+	} else {
+		this->sign = 1;
+		this->numbers = new int[length];
+		this->numbers[0] = x;
+	}
+
+	this->length = 1;
+}
+
 LongNumber::LongNumber(const LongNumber& x) {
 	this->sign = x.sign;
 	this->length = x.length;
@@ -351,9 +366,8 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
 	LongNumber remainder("0");
 
 	for (int pos = 0; pos < dividend.length; pos++) {
-		remainder = remainder * LongNumber("10");
-		char digit_char[2] = { char('0' + dividend.numbers[pos]), '\0' };
-		remainder = remainder + LongNumber(digit_char);
+		remainder = remainder * 10;
+		remainder = remainder + LongNumber(dividend.numbers[pos]);
 		remainder.remove_leading_zeros();
 
 		int digit = 0;
@@ -362,9 +376,12 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
 			digit++;
 		}
 
-		result = result * LongNumber("10");
-		char result_digit[2] = { char('0' + digit), '\0' };
-		result = result + LongNumber(result_digit);
+		result = result * 10;
+		result = result + digit;
+	}
+
+	if (this->is_negative() and (result * divisor != dividend)) {
+		result = result + 1;
 	}
 
 	if (!result.is_zero()) {
