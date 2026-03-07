@@ -1,81 +1,112 @@
 #include <gtest/gtest.h>
+
 #include "long_number.hpp"
 
 using drw::LongNumber;
 
-TEST(LongNumberTest, Plus) {
-    EXPECT_EQ(LongNumber("123") + LongNumber("456"), LongNumber("579"));
-    EXPECT_EQ(LongNumber("999") + LongNumber("1"), LongNumber("1000"));
+class FComparisons : public testing::Test {
+public:
+    LongNumber
+    n_2{"-2"}, n_1{"-1"}, n_1_copy{"-1"},
+
+    p_1{"1"}, p_1_copy{"1"}, p_12{"12"};
+};
+
+TEST_F(FComparisons, equal) {
+    EXPECT_TRUE(p_1 == p_1_copy) << "EXPECT_TRUE: 1 == 1";
+    EXPECT_FALSE(n_1 == p_1) << "EXPECT_FALSE: -1 == 1";
+    EXPECT_FALSE(p_1 == p_12) << "EXPECT_FALSE: 1 == 12";
+    EXPECT_EQ(p_1, p_1_copy) << "EXPECT_EQ: 1 == 1";
+    EXPECT_EQ(n_1, n_1_copy) << "EXPECT_EQ: -1 == -1";
 }
 
-TEST(LongNumberTest, Plus_WithZero) {
-    EXPECT_EQ(LongNumber("123") + LongNumber("0"), LongNumber("123"));
+TEST_F(FComparisons, not_equal) {
+    EXPECT_TRUE(n_1 != p_1) << "EXPECT_TRUE: -1 != 1";
+    EXPECT_TRUE(p_1 != p_12) << "EXPECT_TRUE: 1 != 12";
+    EXPECT_FALSE(p_1 != p_1_copy) << "EXPECT_FALSE: 1 == 1";
+    ASSERT_NE(p_1, p_12) << "ASSERT_NE: 1 != 12";
+    ASSERT_NE(n_1, p_1) << "ASSERT_NE: -1 != 1";
 }
 
-TEST(LongNumberTest, Plus_Negative) {
-    EXPECT_EQ(LongNumber("-5") + LongNumber("10"), LongNumber("5"));
-    EXPECT_EQ(LongNumber("5") + LongNumber("-10"), LongNumber("-5"));
-    EXPECT_EQ(LongNumber("-10") + LongNumber("10"), LongNumber("0"));
+TEST_F(FComparisons, more) {
+    EXPECT_TRUE(p_12 > p_1) << "12 > 1";
+    EXPECT_TRUE(p_1 > n_1) << "1 > -1";
+    EXPECT_TRUE(n_1 > n_2) << "-1 > -2";
+    EXPECT_FALSE(p_1_copy > p_1) << "1 > 1";
+    EXPECT_FALSE(p_1 > p_12) << "1 > 12";
 }
 
-TEST(LongNumberTest, Minus) {
-    EXPECT_EQ(LongNumber("10") - LongNumber("3"), LongNumber("7"));
+TEST_F(FComparisons, less) {
+    EXPECT_TRUE(p_1 < p_12) << "1 < 12";
+    EXPECT_TRUE(n_1 < p_1) << "-1 < 1";
+    EXPECT_TRUE(n_2 < n_1) << "-2 < -1";
+    EXPECT_FALSE(p_1_copy < p_1) << "1 < 1";
+    EXPECT_FALSE(p_12 < p_1) << "12 < 1";
 }
 
-TEST(LongNumberTest, Minus_Same) {
-    EXPECT_EQ(LongNumber("5") - LongNumber("5"), LongNumber("0"));
+class FArithmetic : public testing::Test {
+public:
+    LongNumber
+    n_19602{"-19602"}, n_99{"-99"}, n_87{"-87"}, n_17{"-17"},
+    n_16{"-16"}, n_15{"-15"},
+    n_7{"-7"}, n_4{"-4"}, n_3{"-3"}, n_2{"-2"}, n_1{"-1"},
+
+    p_0{"0"}, p_1{"1"}, p_1_copy{"1"}, p_2{"2"}, p_3{"3"},
+    p_4{"4"}, p_6{"6"}, p_12{"12"}, p_16{"16"}, p_17{"17"},
+    p_99{"99"}, p_99_copy{"99"},
+    p_113{"113"}, p_198{"198"}, p_1188{"1188"}, p_19602{"19602"},
+
+    n_100{"-100"}, n_6{"-6"}, p_100{"100"}, p_{"6"};
+};
+
+TEST_F(FArithmetic, summ) {
+    EXPECT_EQ(p_2, p_1 + p_1_copy) << "1 + 1 = 2";
+    EXPECT_EQ(p_0, p_1 + n_1) << "1 + (-1) = 0";
+    EXPECT_EQ(p_198, p_99 + p_99_copy) << "99 + 99 = 198";
+    EXPECT_EQ(n_87, n_99 + p_12) << "-99 + 12 = -87";
+    EXPECT_EQ(n_87, p_12 + n_99) << "12 + (-99) = -87";
 }
 
-TEST(LongNumberTest, Minus_Negative) {
-    EXPECT_EQ(LongNumber("-10") - LongNumber("3"), LongNumber("-13"));
+TEST_F(FArithmetic, substraction) {
+    EXPECT_EQ(p_0, p_1 - p_1_copy) << "1 - 1 = 0";
+    EXPECT_EQ(p_2, p_1 - n_1) << "1 + (-1) = 2";
+    EXPECT_EQ(n_87, p_12 - p_99) << "12 - 99 = -87";
 }
 
-TEST(LongNumberTest, Multiplication) {
-    EXPECT_EQ(LongNumber("3") * LongNumber("4"), LongNumber("12"));
-    EXPECT_EQ(LongNumber("999") * LongNumber("999"), LongNumber("998001"));
+TEST_F(FArithmetic, multiply) {
+    EXPECT_EQ(p_1, p_1 * p_1_copy) << "1 * 1 = 1";
+    EXPECT_EQ(n_1, p_1 * n_1) << "1 * (-1) = -1";
+    EXPECT_EQ(p_0, p_0 * p_99) << "0 * 99 = 0";
+    EXPECT_EQ(p_1188, p_12 * p_99) << "12 * 99 = 1188";
+    EXPECT_EQ(n_19602, p_198 * p_99 * n_1) << "198 * 99 * -1 = -19602";
 }
 
-TEST(LongNumberTest, Multiplication_01) {
-    EXPECT_EQ(LongNumber("0") * LongNumber("123"), LongNumber("0"));
-    EXPECT_EQ(LongNumber("1") * LongNumber("123"), LongNumber("123"));
+TEST_F(FArithmetic, division) {
+    EXPECT_EQ(p_2, p_2 / p_1) << "2 / 1 = 2";
+    EXPECT_EQ(p_198, p_19602 / p_99) << "19602 / 99 = 198";
+    EXPECT_EQ(p_99, n_19602 / p_198 / n_1) << "-19602 / 198 / -1  = 99";
 }
 
-TEST(LongNumberTest, Multiplication_Signs) {
-    EXPECT_EQ(LongNumber("-5") * LongNumber("4"), LongNumber("-20"));
-    EXPECT_EQ(LongNumber("-5") * LongNumber("-4"), LongNumber("20"));
+TEST_F(FArithmetic, division_full_sign_example) {
+    EXPECT_EQ(p_16, p_100 / p_6) << "100 / 6 = 16";
+    EXPECT_EQ(n_16, p_100 / n_6) << "100 / -6 = -16";
+    EXPECT_EQ(n_17, n_100 / p_6) << "-100 / 6 = -17";
+    EXPECT_EQ(p_17, n_100 / n_6) << "-100 / -6 = 17";
 }
 
-TEST(LongNumberTest, Division) {
-    EXPECT_EQ(LongNumber("10") / LongNumber("3"), LongNumber("3"));
-    EXPECT_EQ(LongNumber("3") / LongNumber("10"), LongNumber("0"));
+TEST_F(FArithmetic, remainder) {
+    EXPECT_EQ(p_1, p_3 % p_2) << "3 % 2 = 1";
+    EXPECT_EQ(p_6, p_19602 % p_12) << "19602 % 12 = 6";
+    EXPECT_EQ(p_1, n_15 % p_4) << "-15 % 4 = 1";
+    EXPECT_EQ(p_2, p_113 % n_3) << "113 % -3 = 2";
+    EXPECT_EQ(p_6, n_15 % n_7) << "-15 % -7 = 6";
 }
 
-TEST(LongNumberTest, Division_Signs) {
-    EXPECT_EQ(LongNumber("-15") / LongNumber("4"), LongNumber("-3"));
-    EXPECT_EQ(LongNumber("15") / LongNumber("-4"), LongNumber("-3"));
-    EXPECT_EQ(LongNumber("-15") / LongNumber("-4"), LongNumber("3"));
-}
-
-TEST(LongNumberTest, Modulo) {
-    EXPECT_EQ(LongNumber("10") % LongNumber("3"), LongNumber("1"));
-    EXPECT_EQ(LongNumber("100") % LongNumber("7"), LongNumber("2"));
-}
-
-TEST(LongNumberTest, Equal) {
-    EXPECT_TRUE(LongNumber("123") == LongNumber("123"));
-    EXPECT_TRUE(LongNumber("0") == LongNumber("0"));
-    EXPECT_FALSE(LongNumber("123") == LongNumber("124"));
-}
-
-TEST(LongNumberTest, NonEqual) {
-    EXPECT_TRUE(LongNumber("100") > LongNumber("99"));
-    EXPECT_TRUE(LongNumber("5") > LongNumber("-100"));
-    EXPECT_TRUE(LongNumber("-1") > LongNumber("-100"));
-    EXPECT_FALSE(LongNumber("99") > LongNumber("100"));
-
-    EXPECT_TRUE(LongNumber("99") < LongNumber("100"));
-    EXPECT_TRUE(LongNumber("-100") < LongNumber("5"));
-    EXPECT_FALSE(LongNumber("100") < LongNumber("99"));
+TEST_F(FArithmetic, remainder_full_sign_example) {
+    EXPECT_EQ(p_4, p_100 % p_6) << "100 % 6 = 4";
+    EXPECT_EQ(p_4, p_100 % n_6) << "100 % -6 = 4";
+    EXPECT_EQ(p_2, n_100 % p_6) << "-100 % 6 = 2";
+    EXPECT_EQ(p_2, n_100 % n_6) << "-100 % -6 = 2";
 }
 
 int main(int argc, char **argv) {
