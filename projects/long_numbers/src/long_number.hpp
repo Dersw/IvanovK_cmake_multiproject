@@ -13,7 +13,7 @@ namespace drw {
 			LongNumber();
 			LongNumber(int length, int sign);
 			LongNumber(const char* const str);
-			LongNumber(int x);
+			LongNumber(const int x);
 			LongNumber(const LongNumber& x);
 			LongNumber(LongNumber&& x);
 			
