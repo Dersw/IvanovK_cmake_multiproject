@@ -102,6 +102,8 @@ LongNumber::~LongNumber() {
 }
 
 LongNumber& LongNumber::operator = (const char* const str) {
+	delete[] this->numbers;
+
 	if (str[0] == '-') {
 		this->sign = 0;
 	} else {
@@ -111,7 +113,6 @@ LongNumber& LongNumber::operator = (const char* const str) {
 	this->length = get_length(str);
 
 	if (str[0] == '+' or str[0] == '-') {
-		this->length -= 1;
 		this->numbers = new int[length];
 		for (int i = 0; i < this->length; i++) {
 			this->numbers[i] = str[i + 1] - '0';
