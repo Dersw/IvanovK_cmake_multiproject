@@ -1,7 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "io.hpp"
 #include "sortings.hpp"
 
 TEST(ArraysEqual, AnyElementsCount) {
