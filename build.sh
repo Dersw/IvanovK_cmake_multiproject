@@ -12,8 +12,6 @@ cd "${BUILD_FOLDER}" || exit 1
 cmake -G "${BUILD_TYPE}" "../${SOURCE_FOLDER}"
 cmake --build .
 
-mkdir -p bubble_sort
-
 arr_files[0]="run_bubble_sort.sh"
 arr_files[1]="run_bubble_sort_test.sh"
 arr_files[2]="run_multilevel_menu.sh"
