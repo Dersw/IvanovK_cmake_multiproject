@@ -1,6 +1,6 @@
 # Installation (Linux)
 
-**Start**
+**Getting started**
 ```bash
 git clone https://github.com/Dersw/IvanovK_cmake_multiproject.git  
 cd IvanovK_cmake_multiproject
