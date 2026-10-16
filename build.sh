@@ -18,6 +18,7 @@ arr_files[2]="run_multilevel_menu.sh"
 arr_files[3]="run_long_numbers_test.sh"
 arr_files[4]="run_double_linked_list_test.sh"
 arr_files[5]="run_vector_test.sh"
+arr_files[6]="run_qt_keyboard.sh"
 
 arr_folders[0]="bubble_sort"
 arr_folders[1]="bubble_sort_test/test"
@@ -25,8 +26,9 @@ arr_folders[2]="multilevel_menu"
 arr_folders[3]="long_numbers/test"
 arr_folders[4]="double_linked_list/test"
 arr_folders[5]="vector/test"
+arr_folders[6]="qt_keyboard"
 
-for i in {0..5}; do
+for i in {0..6}; do
     cp "../$SOURCE_FOLDER/${arr_folders[i]}/${arr_files[i]}" "./${arr_folders[i]}"
 done
 

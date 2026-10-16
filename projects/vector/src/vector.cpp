@@ -60,7 +60,6 @@ bool Vector<T>::insert(const std::size_t position, const T& value) {
 		delete[] arr;
 		arr = new_arr;
 		capacity = new_size;
-
 		}
 	}
 	else {

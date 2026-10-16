@@ -11,5 +11,6 @@ add_subdirectory(multilevel_menu)
 add_subdirectory(long_numbers)
 add_subdirectory(double_linked_list)
 add_subdirectory(vector)
+add_subdirectory(qt_keyboard)
 
 set(CMAKE_SUPPRESS_REGENERATION true)
